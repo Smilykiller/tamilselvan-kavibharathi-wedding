@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>S. Tamilselvan weds I. Kavibharathi | Cinematic Wedding Invitation</title>
+    <!-- Google Fonts: Cinzel (Serif), Playfair Display (Serif), Great Vibes (Cursive accent), Montserrat (Modern clean secondary) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- CINEMATIC PORTAL ENTRANCE OVERLAY -->
+    <div class="cinematic-entrance-portal" id="cinematic-portal">
+      <div class="cinematic-light-burst"></div>
+    </div>
+
+    <!-- MOBILE-ONLY SCREEN CONTAINER (Centered Smartphone View on Desktop) -->
+    <div class="mobile-app-shell">
+
+      <!-- SECTION 1: HERO VIEWPORT (100vh) -->
+      <section id="hero" class="hero-section">
+      <div class="hero-bg cinematic-dolly" style="background-image: url('/hero_couple.JPG'); background-position: center 250%;"></div>
+      <div class="hero-gradient-overlay"></div>
+      
+      <div class="hero-content">
+        <p class="hero-tagline">TOGETHER WITH THEIR FAMILIES</p>
+        <h1 class="hero-title">
+          <span class="name gold-glow">S. Tamilselvan</span>
+          <span class="weds-accent">weds</span>
+          <span class="name gold-glow">I. Kavibharathi</span>
+        </h1>
+      </div>
+
+      <a href="#welcome" class="scroll-indicator" aria-label="Scroll to welcome section">
+        <span class="scroll-text">EXPLORE INVITATION</span>
+        <div class="scroll-arrow">↓</div>
+      </a>
+    </section>
+
+    <!-- SECTION 2: QUOTE / WELCOME SECTION -->
+    <section id="welcome" class="welcome-section">
+      <div class="welcome-container">
+        <div class="welcome-ornament">❖</div>
+        <h2 class="welcome-title gold-glow">A CELEBRATION OF LOVE</h2>
+        <p class="welcome-paragraph">
+          “Love is in the air, bringing two hearts and families together in eternal union. We joyfully invite you to share in our happiness and bless our new beginning as we step into a lifetime of love, devotion, and shared dreams.”
+        </p>
+        <div class="welcome-divider">
+          <span class="divider-line"></span>
+          <span class="divider-diamond">◆</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE SCRATCH TO REVEAL DATE -->
+    <section id="scratch-reveal" class="scratch-section">
+      <div class="scratch-container">
+        <div class="scratch-header">
+          <span class="scratch-badge">INTERACTIVE INVITATION</span>
+          <h2 class="scratch-title gold-glow">SCRATCH TO REVEAL</h2>
+          <p class="scratch-instruction">Swipe or drag across the golden foil card below to unveil our auspicious date &amp; time</p>
+        </div>
+
+        <div class="scratch-card-wrapper" id="scratch-wrapper">
+          <!-- Hidden Revealed Content -->
+          <div class="scratch-secret-content">
+            <div class="secret-ornament">❖</div>
+            <p class="secret-sub">DIVINE MUHURTHAM</p>
+            <h3 class="secret-date gold-glow">AUGUST 23, 2026</h3>
+            <p class="secret-time">04:30 AM ONWARDS</p>
+            <div class="secret-divider"></div>
+            <p class="secret-reception">RECEPTION: AUGUST 22, 2026 • 06:30 PM</p>
+            <p class="secret-blessing">We eagerly await your gracious presence</p>
+          </div>
+
+          <!-- Interactive HTML5 Canvas Gold Foil Overlay -->
+          <canvas id="scratch-canvas" aria-label="Scratch card overlay"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: AUTOMATIC WEDDING PORTRAIT SHOWCASE (5 PICTURES) -->
+    <section id="portrait-showcase" class="portrait-section">
+      <div class="portrait-container">
+        <div class="portrait-header">
+          <span class="portrait-badge">ROYAL ATTIRE &amp; PORTRAITS</span>
+          <h2 class="portrait-title gold-glow">THE DIVINE COUPLE</h2>
+        </div>
+
+        <div class="portrait-frame" id="portrait-slideshow">
+          <img src="/hero_couple.JPG" alt="S. Tamilselvan and I. Kavibharathi Portrait 1" class="portrait-slide active" />
+          <img src="/couple.JPG" alt="S. Tamilselvan and I. Kavibharathi Portrait 2" class="portrait-slide" style="object-position: 80% center;"/>
+          <img src="/gallery2.JPG" alt="S. Tamilselvan and I. Kavibharathi Portrait 3" class="portrait-slide" style="object-position: 70% center;" />
+          <img src="/gallery3.JPG" alt="S. Tamilselvan and I. Kavibharathi Portrait 4" class="portrait-slide" />
+          <img src="/portrait5.JPG" alt="S. Tamilselvan and I. Kavibharathi Portrait 5" class="portrait-slide" style="object-position: 68% center;"/>
+
+          <div class="portrait-caption-overlay">
+            <p class="portrait-caption-title">S. Tamilselvan &amp; I. Kavibharathi</p>
+            <p class="portrait-caption-sub">Traditional Royal Wedding Attire</p>
+          </div>
+
+          <div class="portrait-dots" id="portrait-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: LIVE COUNTDOWN -->
+    <section id="countdown" class="countdown-section">
+      <div class="section-container">
+        <p class="countdown-label">COUNTING DOWN TO THE MUHURTHAM</p>
+        <div class="countdown-grid" id="countdown-timer">
+          <div class="time-unit">
+            <span class="time-value" id="cd-days">00</span>
+            <span class="time-label">DAYS</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-unit">
+            <span class="time-value" id="cd-hours">00</span>
+            <span class="time-label">HOURS</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-unit">
+            <span class="time-value" id="cd-minutes">00</span>
+            <span class="time-label">MINUTES</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-unit">
+            <span class="time-value" id="cd-seconds">00</span>
+            <span class="time-label">SECONDS</span>
+          </div>
+        </div>
+        <p class="countdown-subtext">SUNDAY, 23RD AUGUST 2026 • 04:30 AM</p>
+      </div>
+    </section>
+
+
+    <!-- SECTION 6: INTERACTIVE CINEMATIC VENUES & MAP EXPLORER -->
+    <section id="location" class="location-section">
+      <div class="location-container">
+        <div class="location-header">
+          <span class="location-badge">SACRED DESTINATIONS</span>
+          <h2 class="location-title gold-glow">VENUES &amp; SANCTUARIES</h2>
+          <p class="location-subtitle">TAP TO SWITCH BETWEEN OUR RECEPTION MANDAPAM &amp; MUHURTHAM TEMPLE</p>
+        </div>
+
+        <div class="venue-cinematic-card frosted-card">
+          <!-- Venue Switcher Tabs -->
+          <div class="venue-tabs">
+            <button class="venue-tab active" data-venue="reception">
+              <span class="tab-icon">🏛️</span>
+              <span class="tab-label">RECEPTION MANDAPAM</span>
+            </button>
+            <button class="venue-tab" data-venue="muhurtham">
+              <span class="tab-icon">🛕</span>
+              <span class="tab-label">MUHURTHAM TEMPLE</span>
+            </button>
+          </div>
+
+          <!-- Interactive Cinematic Sanctuary Viewport -->
+          <div class="venue-viewport">
+            <img src="/venue_reception.png" alt="Grand Mandapam Reception Sanctuary" class="venue-map-bg" id="venue-bg-image" />
+            <div class="radar-beacon">
+              <span class="radar-pulse"></span>
+              <span class="radar-dot">◆</span>
+            </div>
+            <div class="venue-floating-badge" id="venue-city-badge">COIMBATORE</div>
+          </div>
+
+          <!-- Dynamic Venue Info Panel -->
+          <div class="venue-info-panel">
+            <div class="venue-datetime-badge" id="venue-datetime">📅 SATURDAY, AUG 22, 2026 • 6:00 PM ONWARDS</div>
+            <h3 class="venue-name gold-glow" id="venue-name">Thanganayagi Amman Kovil Arakattalai New Mandapam</h3>
+            <p class="venue-address" id="venue-address">Coimbatore, Tamil Nadu • Grand Celebration Hall</p>
+
+            <div class="venue-highlights" id="venue-highlights">
+              <span class="highlight-pill">✨ Royal Pillar Architecture</span>
+              <span class="highlight-pill">❄️ Air-Conditioned Hall</span>
+              <span class="highlight-pill">🚗 Ample Valet Parking</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="venue-actions">
+              <a href="https://maps.google.com/?q=Thanganayagi+Amman+Kovil+Arakattalai+New+Mandapam+Coimbatore" target="_blank" rel="noopener noreferrer" class="btn-venue-nav" id="venue-gps-btn">
+                <span class="btn-text">📍 CLICK FOR LOCATION</span>
+                <span class="arrow-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: MINIMALIST GOLD FOOTER -->
+    <footer id="footer" class="footer-section">
+      <div class="footer-container">
+        <div class="blessings-block">
+          <p class="blessing-quote">"WITH THE HEAVENLY BLESSINGS &amp; WARM WISHES FROM OUR FAMILY &amp; FRIENDS"</p>
+          <div class="parent-details">
+            <p class="parents-line">INVITED BY</p>
+            <p class="parents-names"><strong>I. Ilango &amp; Family</strong> • <strong>M. Sureshkumar &amp; Family</strong></p>
+          </div>
+        </div>
+
+        <div class="closing-remark-block">
+          <p class="closing-remark">We can't wait to celebrate with you!</p>
+          <div class="footer-logo-wrapper">
+            <img src="/logo.png" alt="S. Tamilselvan &amp; I. Kavibharathi Logo" class="footer-logo" />
+          </div>
+          <p class="copyright-text">AUGUST 2026 • CELEBRATION OF ETERNAL LOVE</p>
+        </div>
+      </div>
+    </footer>
+    </div> <!-- /mobile-app-shell -->
+
+    <!-- Scripts -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

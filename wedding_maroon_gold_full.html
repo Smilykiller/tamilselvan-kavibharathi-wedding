@@ -1,0 +1,597 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400;500&family=Noto+Serif+Tamil:wght@300;400;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --M:#4A0E1A;--M2:#5C1220;--M3:#6E1728;--M4:#3A0B14;
+  --G:#D4A843;--G2:#E8C068;--G3:#F0D080;--G4:rgba(212,168,67,0.18);--G5:rgba(212,168,67,0.08);
+  --G6:rgba(212,168,67,0.35);
+  --cream:#FBF5E8;--cream2:rgba(251,245,232,0.75);--cream3:rgba(251,245,232,0.38);--cream4:rgba(251,245,232,0.15);
+  --rule:rgba(212,168,67,0.22);--rule2:rgba(212,168,67,0.12)
+}
+html,body{background:var(--M)}
+.pg{width:100%;max-width:420px;margin:0 auto;background:var(--M);font-family:'Raleway',sans-serif;color:var(--cream);overflow-x:hidden;position:relative}
+
+canvas#gc{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45}
+
+/* NAV */
+.nav{background:var(--M4);border-bottom:0.5px solid var(--rule);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.nav-logo{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--G2)}
+.lang-toggle{display:flex;border:0.5px solid var(--rule);overflow:hidden}
+.ltb{padding:6px 12px;font-size:9px;letter-spacing:2px;background:transparent;color:var(--G6);border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:all 0.25s}
+.ltb.on{background:var(--G5);color:var(--G2)}
+
+/* HERO */
+.hero{position:relative;min-height:540px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px 52px;text-align:center;overflow:hidden;z-index:1}
+.hero-border{position:absolute;inset:16px;border:0.5px solid var(--rule);pointer-events:none;z-index:2}
+.hero-border::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60px;height:1px;background:var(--G)}
+.hero-border::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:60px;height:1px;background:var(--G)}
+.hero-content{position:relative;z-index:3}
+.h-eyebrow{font-size:8px;letter-spacing:6px;text-transform:uppercase;color:var(--G);opacity:0;animation:riseUp 1s 0.4s ease forwards;font-weight:300;margin-bottom:16px}
+.h-kalasam{font-size:28px;opacity:0;animation:riseUp 1s 0.7s ease forwards;display:block;margin-bottom:12px}
+.h-names{font-family:'Cinzel',serif;font-size:34px;color:var(--cream);line-height:1.2;opacity:0;animation:riseUp 1.2s 1s ease forwards;letter-spacing:1px}
+.h-amp{color:var(--G2);font-family:'Playfair Display',serif;font-style:italic;font-size:28px}
+.h-weds{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--G);opacity:0;animation:riseUp 1s 1.6s ease forwards;margin:10px 0 4px;letter-spacing:2px}
+.h-tamil{font-family:'Noto Serif Tamil',serif;font-size:12px;color:var(--cream3);opacity:0;animation:riseUp 1s 1.9s ease forwards;margin-bottom:20px}
+.h-rule{width:0;height:0.5px;background:var(--G6);margin:18px auto;animation:growW 1.4s 2.1s ease forwards}
+.h-date{font-size:9px;letter-spacing:5px;color:var(--G2);opacity:0;animation:riseUp 1s 2.4s ease forwards;font-weight:200}
+.scroll-cue{font-size:8px;letter-spacing:4px;color:var(--G6);opacity:0;animation:riseUp 1s 3.2s ease forwards;margin-top:32px;font-weight:200}
+.scroll-cue::after{content:'';display:block;width:0.5px;height:32px;background:var(--rule);margin:10px auto 0}
+@keyframes riseUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes growW{from{width:0}to{width:55%}}
+
+/* CORNER ORNAMENTS */
+.co{position:absolute;width:24px;height:24px;z-index:3}
+.co.tl{top:8px;left:8px;border-top:1px solid var(--G6);border-left:1px solid var(--G6)}
+.co.tr{top:8px;right:8px;border-top:1px solid var(--G6);border-right:1px solid var(--G6)}
+.co.bl{bottom:8px;left:8px;border-bottom:1px solid var(--G6);border-left:1px solid var(--G6)}
+.co.br{bottom:8px;right:8px;border-bottom:1px solid var(--G6);border-right:1px solid var(--G6)}
+
+/* SCENE DIVIDER */
+.sdiv{display:flex;align-items:center;padding:0 20px;position:relative;z-index:2;opacity:0;transform:translateY(14px);transition:opacity 0.8s,transform 0.8s}
+.sdiv.vis{opacity:1;transform:none}
+.sdl{height:0.5px;flex:1;background:var(--rule)}
+.sdt{font-size:7px;letter-spacing:5px;text-transform:uppercase;color:var(--G);padding:0 14px;white-space:nowrap;font-weight:300}
+
+/* SCENE */
+.sc{position:relative;z-index:2;padding:44px 24px;opacity:0;transform:translateY(20px);transition:opacity 0.85s,transform 0.85s}
+.sc.vis{opacity:1;transform:none}
+
+/* TYPOGRAPHY */
+.sc-title{font-family:'Cinzel',serif;font-size:22px;color:var(--G2);margin-bottom:5px;font-weight:400}
+.sc-title-ta{font-family:'Noto Serif Tamil',serif;font-size:12px;color:var(--G6);margin-bottom:22px;font-weight:300}
+.sc-eyebrow{font-size:7px;letter-spacing:5px;text-transform:uppercase;color:var(--G);margin-bottom:12px;font-weight:200}
+.sc-body{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--cream2);line-height:1.7}
+
+/* GOLD RULE */
+.grule{display:flex;align-items:center;gap:10px;margin:20px 0}
+.gl{height:0.5px;flex:1;background:var(--rule)}
+.gd{width:5px;height:5px;border:0.5px solid var(--G);transform:rotate(45deg);flex-shrink:0}
+
+/* COUNTDOWN */
+.cd-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:0.5px solid var(--rule)}
+.cd-cell{background:var(--M2);padding:18px 6px;text-align:center}
+.cd-n{font-family:'Cinzel',serif;font-size:30px;color:var(--G2);display:block;line-height:1;font-weight:400}
+.cd-l{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:var(--G6);margin-top:6px;display:block;font-weight:200}
+
+/* PARENTS */
+.parents-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule)}
+.par-cell{background:var(--M2);padding:18px 14px;text-align:center}
+.par-role{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:var(--G);margin-bottom:10px;font-weight:200}
+.par-name{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--cream);line-height:1.4;margin-bottom:4px}
+.par-place{font-size:9px;color:var(--G6);letter-spacing:2px;font-weight:200}
+
+/* COUPLE */
+.couple-block{text-align:center}
+.c-role{font-size:7px;letter-spacing:5px;text-transform:uppercase;color:var(--G);margin-bottom:10px;font-weight:200}
+.c-name{font-family:'Cinzel',serif;font-size:24px;color:var(--cream);letter-spacing:1px}
+.c-qual{font-size:10px;color:var(--G6);letter-spacing:2px;margin-top:5px;font-weight:200}
+.c-sep{display:flex;align-items:center;gap:0;margin:24px 0}
+.c-sep-line{height:0.5px;flex:1;background:var(--rule)}
+.c-sep-txt{font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--G);padding:0 18px;letter-spacing:2px}
+
+/* EVENTS */
+.ev-block{margin-bottom:36px;padding-bottom:36px;border-bottom:0.5px solid var(--rule)}
+.ev-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.ev-act{font-size:7px;letter-spacing:5px;text-transform:uppercase;color:var(--G6);margin-bottom:12px;font-weight:200}
+.ev-name{font-family:'Cinzel',serif;font-size:26px;color:var(--G2);margin-bottom:3px;font-weight:400}
+.ev-name-ta{font-family:'Noto Serif Tamil',serif;font-size:12px;color:var(--G6);margin-bottom:16px}
+.ev-date{font-size:11px;letter-spacing:3px;color:var(--cream);margin-bottom:3px;font-weight:400}
+.ev-time{font-size:9px;letter-spacing:2px;color:var(--G);margin-bottom:16px;font-weight:200}
+.ev-venue{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--cream2);line-height:1.5;margin-bottom:4px}
+.ev-addr{font-size:10px;color:var(--cream3);letter-spacing:1px;line-height:1.7;font-weight:200}
+.ev-map-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 20px;border:0.5px solid var(--G6);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--G2);cursor:pointer;background:transparent;border-radius:0;font-family:'Raleway',sans-serif;font-weight:300;transition:background 0.2s}
+.ev-map-btn:hover{background:var(--G5)}
+
+/* MAP FRAME */
+.map-frame{position:relative;height:180px;overflow:hidden;margin-top:16px;border:0.5px solid var(--rule)}
+.map-frame img{width:100%;height:100%;object-fit:cover;filter:brightness(0.28) sepia(0.8) saturate(1.4) hue-rotate(330deg)}
+.map-ov{position:absolute;inset:0;background:rgba(74,14,26,0.45)}
+.map-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:10px;height:10px;background:var(--G2);border-radius:50%;box-shadow:0 0 0 6px rgba(212,168,67,0.15),0 0 18px rgba(212,168,67,0.3);animation:gPulse 2s ease-in-out infinite}
+@keyframes gPulse{0%,100%{box-shadow:0 0 0 4px rgba(212,168,67,0.15),0 0 14px rgba(212,168,67,0.25)}50%{box-shadow:0 0 0 9px rgba(212,168,67,0.08),0 0 26px rgba(212,168,67,0.4)}}
+.map-lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(58,11,20,0.9);padding:9px 14px;font-size:9px;letter-spacing:2px;color:var(--G);cursor:pointer}
+
+/* SCHEDULE */
+.sch{display:flex;flex-direction:column;gap:0}
+.sch-row{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:0.5px solid var(--rule2)}
+.sch-row:last-child{border-bottom:none}
+.sch-t{font-size:9px;letter-spacing:1px;color:var(--G);min-width:96px;flex-shrink:0;font-weight:200}
+.sch-e{}
+.sch-en{font-size:12px;color:var(--cream);letter-spacing:1px;font-weight:300}
+.sch-ta{font-family:'Noto Serif Tamil',serif;font-size:10px;color:var(--cream3);margin-top:2px}
+.sch-day{font-size:8px;color:var(--G);letter-spacing:2px;margin-top:2px;font-weight:200}
+
+/* POEM */
+.poem-block{background:var(--M4);border-top:0.5px solid var(--rule);border-bottom:0.5px solid var(--rule);padding:52px 24px;text-align:center;position:relative;z-index:2;opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s}
+.poem-block.vis{opacity:1;transform:none}
+.poem-bracket{font-size:9px;letter-spacing:5px;color:var(--G6);margin-bottom:22px;font-weight:200}
+.poem-text{font-family:'Noto Serif Tamil',serif;font-size:15px;color:var(--cream);line-height:2.3;font-weight:300}
+.poem-hl{color:var(--G2)}
+.poem-attr{font-size:8px;letter-spacing:4px;color:var(--G6);margin-top:22px;font-weight:200}
+
+/* GALLERY */
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.gi{overflow:hidden;cursor:pointer;position:relative}
+.gi img{width:100%;height:140px;object-fit:cover;display:block;filter:brightness(0.55) sepia(0.5) saturate(1.2) hue-rotate(320deg);transition:filter 0.45s,transform 0.5s}
+.gi:hover img{filter:brightness(0.75) sepia(0.2);transform:scale(1.05)}
+.gi.wide{grid-column:span 2}
+.gi.wide img{height:200px}
+.gi-overlay{position:absolute;inset:0;border:0.5px solid rgba(212,168,67,0.08)}
+
+/* ROUTE */
+.rt-list{position:relative;padding-left:22px}
+.rt-thread{position:absolute;left:9px;top:14px;bottom:14px;width:0.5px;background:var(--G6)}
+.rt-stop{display:flex;gap:16px;padding-bottom:28px;position:relative}
+.rt-stop:last-child{padding-bottom:0}
+.rt-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--G6);background:var(--M);flex-shrink:0;margin-top:4px;z-index:1;position:relative}
+.rt-dot.dest{background:var(--G2);border-color:var(--G2)}
+.rt-name{font-size:12px;color:var(--cream);letter-spacing:0.5px;margin-bottom:3px;font-weight:400}
+.rt-name-ta{font-family:'Noto Serif Tamil',serif;font-size:10px;color:var(--cream3);margin-bottom:3px}
+.rt-note{font-size:9px;color:var(--G6);letter-spacing:1px;font-weight:200;line-height:1.6;margin-top:2px}
+
+/* MUSIC */
+.player-wrap{border:0.5px solid var(--rule);background:var(--M2)}
+.player-head{padding:18px 20px 0;font-size:7px;letter-spacing:5px;text-transform:uppercase;color:var(--G);font-weight:200;border-bottom:0.5px solid var(--rule);padding-bottom:14px}
+.tracks{}
+.track-row{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--rule2);cursor:pointer;transition:background 0.2s}
+.track-row:last-child{border-bottom:none}
+.track-row:hover,.track-row.active{background:var(--G5)}
+.tr-num{font-size:9px;color:var(--G6);width:18px;text-align:right;flex-shrink:0;font-weight:200}
+.tr-num.active{color:var(--G2)}
+.tr-info{flex:1;min-width:0}
+.tr-name{font-size:12px;color:var(--cream2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-row.active .tr-name{color:var(--G2)}
+.tr-artist{font-size:10px;color:var(--cream3);margin-top:2px;font-weight:200}
+.tr-dur{font-size:9px;color:var(--cream3);flex-shrink:0;letter-spacing:1px}
+.eq-bars{display:flex;align-items:flex-end;gap:2px;height:14px;flex-shrink:0}
+.eq-b{width:2px;background:var(--G2);border-radius:1px;animation:eqBounce 0.5s ease-in-out infinite alternate}
+.eq-b:nth-child(2){animation-delay:0.12s;height:10px}
+.eq-b:nth-child(3){animation-delay:0.25s;height:13px}
+.eq-b:nth-child(1){height:7px}
+@keyframes eqBounce{from{transform:scaleY(0.3)}to{transform:scaleY(1)}}
+.player-ctrl{padding:16px 20px;border-top:0.5px solid var(--rule);display:flex;align-items:center;gap:14px}
+.pc-btn{background:transparent;border:none;color:var(--cream3);cursor:pointer;font-family:'Raleway',sans-serif;display:flex;align-items:center;justify-content:center}
+.pc-play{width:34px;height:34px;border:0.5px solid var(--G6);border-radius:50%;color:var(--G2)}
+.prog-bar{flex:1;height:1px;background:var(--rule);position:relative;cursor:pointer}
+.prog-fill{height:100%;background:var(--G2);width:0%}
+.prog-dot{position:absolute;top:50%;right:-4px;width:7px;height:7px;border-radius:50%;background:var(--G2);transform:translateY(-50%)}
+.player-now{display:flex;justify-content:space-between;align-items:center;padding:10px 20px 16px;border-top:0.5px solid var(--rule2)}
+.pn-name{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--G2)}
+.pn-time{font-size:9px;color:var(--cream3);letter-spacing:2px;font-weight:200}
+
+/* WISHES */
+.wish-compose{border:0.5px solid var(--rule);padding:18px;margin-bottom:20px;background:var(--M2)}
+.wish-input{background:transparent;border:none;border-bottom:0.5px solid var(--rule);padding:8px 0;font-size:12px;color:var(--cream);font-family:'Raleway',sans-serif;font-weight:300;width:100%;outline:none;letter-spacing:1px}
+.wish-input::placeholder{color:var(--cream3);font-size:11px;letter-spacing:2px}
+.wish-input:focus{border-bottom-color:var(--G6)}
+.wish-row{display:flex;gap:10px;margin-bottom:10px}
+.wish-ta{background:transparent;border:0.5px solid var(--rule);padding:12px;font-size:12px;color:var(--cream);font-family:'Raleway',sans-serif;width:100%;outline:none;resize:none;height:76px;line-height:1.7;margin-bottom:12px}
+.wish-ta::placeholder{color:var(--cream3);font-size:10px;letter-spacing:2px}
+.wish-ta:focus{border-color:var(--G6)}
+.wish-footer{display:flex;justify-content:space-between;align-items:center}
+.wlp-row{display:flex;gap:0;border:0.5px solid var(--rule);overflow:hidden}
+.wlp{padding:5px 11px;font-size:9px;letter-spacing:2px;background:transparent;color:var(--G6);border:none;cursor:pointer;font-family:'Raleway',sans-serif}
+.wlp.on{background:var(--G5);color:var(--G2)}
+.wish-send-btn{padding:9px 18px;background:transparent;border:0.5px solid var(--G6);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--G2);cursor:pointer;font-family:'Raleway',sans-serif;font-weight:300;transition:background 0.2s}
+.wish-send-btn:hover{background:var(--G4)}
+.wish-feed{display:flex;flex-direction:column;gap:12px}
+.wcard{border-left:0.5px solid var(--G6);padding:12px 16px}
+.wc-from{font-size:8px;letter-spacing:3px;color:var(--G);margin-bottom:6px;font-weight:200;text-transform:uppercase}
+.wc-msg{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--cream2);line-height:1.6}
+.wc-msg.ta{font-family:'Noto Serif Tamil',serif;font-size:12px;font-style:normal}
+.wc-time{font-size:8px;color:var(--cream3);margin-top:7px;letter-spacing:2px;font-weight:200}
+.wc-count{font-size:9px;color:var(--G6);letter-spacing:2px;text-align:center;margin-top:18px;font-weight:200}
+
+/* GIFT */
+.gift-intro{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--cream2);line-height:1.75;margin-bottom:10px}
+.gift-intro-ta{font-family:'Noto Serif Tamil',serif;font-size:11px;color:var(--cream3);line-height:1.9;margin-bottom:24px}
+.gift-item{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:0.5px solid var(--rule2)}
+.gift-item:last-child{border-bottom:none}
+.gi-badge{width:32px;height:32px;border:0.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--G2);font-size:15px}
+.gi-body{flex:1}
+.gi-title{font-size:12px;color:var(--cream);letter-spacing:1px;margin-bottom:2px;font-weight:400}
+.gi-title-ta{font-family:'Noto Serif Tamil',serif;font-size:10px;color:var(--cream3);margin-bottom:4px}
+.gi-desc{font-size:10px;color:var(--cream3);line-height:1.6;font-weight:200}
+.gi-pill{font-size:7px;letter-spacing:2px;padding:3px 9px;border:0.5px solid var(--rule);color:var(--G);font-weight:200;text-transform:uppercase;flex-shrink:0;margin-top:3px;align-self:flex-start}
+.gi-pill.pop{border-color:var(--G6);color:var(--G2);background:var(--G5)}
+.gift-note{margin-top:22px;border:0.5px solid var(--rule);padding:18px;text-align:center;background:var(--M2)}
+.gn-body{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--cream2);line-height:1.7;margin-bottom:8px}
+.gn-ta{font-family:'Noto Serif Tamil',serif;font-size:11px;color:var(--cream3);line-height:1.8}
+
+/* RSVP */
+.rsvp-block{text-align:center;padding:44px 24px}
+.rsvp-h{font-family:'Cinzel',serif;font-size:28px;color:var(--G2);margin-bottom:6px;font-weight:400}
+.rsvp-ta{font-family:'Noto Serif Tamil',serif;font-size:13px;color:var(--G6);margin-bottom:6px}
+.rsvp-sub{font-size:9px;letter-spacing:3px;color:var(--cream3);margin-bottom:28px;font-weight:200}
+.rsvp-btns{display:flex;flex-direction:column;gap:10px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;background:#075E54;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#fff;cursor:pointer;border:none;font-family:'Raleway',sans-serif}
+.btn-outline{display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;background:transparent;border:0.5px solid var(--G6);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--G2);cursor:pointer;font-family:'Raleway',sans-serif;font-weight:300;transition:background 0.2s}
+.btn-outline:hover{background:var(--G5)}
+.wa-svg{width:15px;height:15px;fill:#fff;flex-shrink:0}
+
+/* CLOSING */
+.closing{background:var(--M4);border-top:0.5px solid var(--rule);padding:52px 24px 40px;text-align:center;position:relative;z-index:2}
+.cl-orn{font-size:18px;letter-spacing:8px;color:var(--G6);margin-bottom:24px;display:block}
+.cl-names{font-family:'Cinzel',serif;font-size:22px;color:var(--G2);line-height:1.5;margin-bottom:8px;font-weight:400}
+.cl-names-ta{font-family:'Noto Serif Tamil',serif;font-size:14px;color:var(--G6);margin-bottom:20px}
+.cl-phones{display:flex;flex-direction:column;gap:5px;margin-bottom:22px}
+.cl-ph{font-size:10px;color:var(--cream3);letter-spacing:2px;font-weight:200}
+.cl-rule{width:36px;height:0.5px;background:var(--G6);margin:18px auto}
+.cl-end{font-size:7px;letter-spacing:5px;color:var(--G6);font-weight:200}
+
+/* LIGHTBOX */
+.lb-wrap{display:none;position:absolute;inset:0;min-height:500px;background:rgba(30,5,12,0.97);z-index:200;align-items:center;justify-content:center;flex-direction:column}
+.lb-wrap.open{display:flex}
+.lb-img{max-width:330px;max-height:400px;object-fit:contain;border:0.5px solid var(--rule)}
+.lb-x{background:none;border:none;color:var(--G2);font-size:20px;cursor:pointer;position:absolute;top:16px;right:18px;font-family:'Raleway',sans-serif}
+.lb-nav{display:flex;gap:8px;margin-top:14px}
+.lb-nav button{background:transparent;border:0.5px solid var(--G6);color:var(--G2);padding:8px 18px;font-size:8px;letter-spacing:3px;cursor:pointer;font-family:'Raleway',sans-serif;text-transform:uppercase}
+</style>
+
+<div class="pg" id="root">
+<canvas id="gc"></canvas>
+
+<nav class="nav">
+  <div class="nav-logo">திருமண அழைப்பிதழ்</div>
+  <div class="lang-toggle">
+    <button class="ltb on" onclick="setLang('en')">EN</button>
+    <button class="ltb" onclick="setLang('ta')">த</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-border"></div>
+  <div class="co tl"></div><div class="co tr"></div><div class="co bl"></div><div class="co br"></div>
+  <div class="hero-content">
+    <div class="h-eyebrow" data-en="A wedding invitation" data-ta="திருமண அழைப்பிதழ்">A wedding invitation</div>
+    <span class="h-kalasam">🪔</span>
+    <div class="h-names">
+      Tamilselvan<br>
+      <span class="h-amp">&</span><br>
+      Kavibharathi
+    </div>
+    <div class="h-weds" data-en="— weds —" data-ta="— மணக்கிறார் —">— weds —</div>
+    <div class="h-tamil">சு. தமிழ்செல்வன் & இ. கவிபாரதி</div>
+    <div class="h-rule"></div>
+    <div class="h-date" data-en="22 — 23 · August · 2026" data-ta="22 — 23 · ஆகஸ்ட் · 2026">22 — 23 · August · 2026</div>
+    <div class="scroll-cue" data-en="scroll to begin" data-ta="தொடர உருட்டவும்">scroll to begin</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="sdiv" id="s0"><div class="sdl"></div><div class="sdt" data-en="Time remaining" data-ta="எஞ்சிய நேரம்">Time remaining</div><div class="sdl"></div></div>
+<div class="cd-grid" id="cd0" style="position:relative;z-index:2">
+  <div class="cd-cell"><span class="cd-n" id="cdd">--</span><span class="cd-l" data-en="days" data-ta="நாட்கள்">days</span></div>
+  <div class="cd-cell"><span class="cd-n" id="cdh">--</span><span class="cd-l" data-en="hours" data-ta="மணி">hours</span></div>
+  <div class="cd-cell"><span class="cd-n" id="cdm">--</span><span class="cd-l" data-en="mins" data-ta="நிமிடம்">mins</span></div>
+  <div class="cd-cell"><span class="cd-n" id="cds">--</span><span class="cd-l" data-en="secs" data-ta="விநாடி">secs</span></div>
+</div>
+
+<!-- PARENTS -->
+<div class="sdiv" id="s1"><div class="sdl"></div><div class="sdt" data-en="Scene I · The families" data-ta="காட்சி I · குடும்பங்கள்">Scene I · The families</div><div class="sdl"></div></div>
+<div class="sc" id="sc1">
+  <div class="parents-grid">
+    <div class="par-cell">
+      <div class="par-role" data-en="Groom's parents · Tirupur" data-ta="மணமகன் பெற்றோர்">Groom's parents</div>
+      <div class="par-name">Mr. M. Sureshkumar<br>& Mrs. S. Parameswari</div>
+      <div class="par-place">Tirupur</div>
+    </div>
+    <div class="par-cell">
+      <div class="par-role" data-en="Bride's parents · Veeriyampalayam" data-ta="மணமகள் பெற்றோர்">Bride's parents</div>
+      <div class="par-name">Mr. K. Ilango<br>& Mrs. I. Umadevi</div>
+      <div class="par-place">Veeriyampalayam</div>
+    </div>
+  </div>
+</div>
+
+<!-- COUPLE -->
+<div class="sdiv" id="s2"><div class="sdl"></div><div class="sdt" data-en="Scene II · The couple" data-ta="காட்சி II · இணையர்">Scene II · The couple</div><div class="sdl"></div></div>
+<div class="sc" id="sc2">
+  <div class="couple-block">
+    <div class="c-role" data-en="The Groom" data-ta="மணமகன்">The Groom</div>
+    <div class="c-name">S. Tamilselvan</div>
+    <div class="c-qual">B.E., (Computer Science)</div>
+    <div class="c-sep"><div class="c-sep-line"></div><div class="c-sep-txt" data-en="weds" data-ta="மணக்கிறார்">weds</div><div class="c-sep-line"></div></div>
+    <div class="c-role" data-en="The Bride" data-ta="மணமகள்">The Bride</div>
+    <div class="c-name">I. Kavibharathi</div>
+    <div class="c-qual">M.Sc., (Nutrition & Dietetics)</div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="sdiv" id="s3"><div class="sdl"></div><div class="sdt" data-en="Scene III · The celebrations" data-ta="காட்சி III · கொண்டாட்டங்கள்">Scene III · The celebrations</div><div class="sdl"></div></div>
+<div class="sc" id="sc3">
+  <div class="ev-block">
+    <div class="ev-act" data-en="Act one" data-ta="முதல் நிகழ்வு">Act one</div>
+    <div class="ev-name" data-en="The Reception" data-ta="வரவேற்பு விழா">The Reception</div>
+    <div class="ev-name-ta">வரவேற்பு விழா</div>
+    <div class="ev-date" data-en="Saturday · 22 August 2026" data-ta="சனிக்கிழமை · 22 ஆகஸ்ட் 2026">Saturday · 22 August 2026</div>
+    <div class="ev-time">6:00 PM — 9:00 PM</div>
+    <div class="ev-venue">Thanganayagi Amman Kovil<br>Arakattalai New Mandapam</div>
+    <div class="ev-addr">Avinashi Road, Arasur Pirivu, Coimbatore</div>
+    <div class="map-frame">
+      <img src="https://images.unsplash.com/photo-1524813686514-a57563d77965?w=600&q=70" alt="Venue"/>
+      <div class="map-ov"></div>
+      <div class="map-pin"></div>
+      <div class="map-lbl" onclick="window.open('https://maps.google.com/?q=Arakattalai+Mandapam+Avinashi+Road+Coimbatore','_blank')">
+        <span data-en="Open in Google Maps →" data-ta="வரைபடத்தில் காண →">Open in Google Maps →</span>
+      </div>
+    </div>
+    <button class="ev-map-btn" onclick="window.open('https://maps.google.com/?q=Arakattalai+Mandapam+Avinashi+Road+Coimbatore','_blank')">
+      <i class="ti ti-map-pin" style="font-size:13px" aria-hidden="true"></i>
+      <span data-en="Get directions" data-ta="வழிகாட்டி பெறவும்">Get directions</span>
+    </button>
+  </div>
+  <div class="ev-block" style="margin-top:28px">
+    <div class="ev-act" data-en="Act two" data-ta="இரண்டாம் நிகழ்வு">Act two</div>
+    <div class="ev-name" data-en="The Muhurtham" data-ta="சுபமுகூர்த்தம்">The Muhurtham</div>
+    <div class="ev-name-ta">சுபமுகூர்த்தம்</div>
+    <div class="ev-date" data-en="Sunday · 23 August 2026" data-ta="ஞாயிற்றுக்கிழமை · 23 ஆகஸ்ட் 2026">Sunday · 23 August 2026</div>
+    <div class="ev-time">4:30 AM — 6:00 AM</div>
+    <div class="ev-venue">Arulmigu Sri Muthukumaraswamy<br>Thirukovil</div>
+    <div class="ev-addr">Konganagiri, College Road, Tirupur</div>
+    <div class="map-frame">
+      <img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=600&q=70" alt="Venue"/>
+      <div class="map-ov"></div>
+      <div class="map-pin"></div>
+      <div class="map-lbl" onclick="window.open('https://maps.google.com/?q=Muthukumaraswamy+Thirukovil+Konganagiri+Tirupur','_blank')">
+        <span data-en="Open in Google Maps →" data-ta="வரைபடத்தில் காண →">Open in Google Maps →</span>
+      </div>
+    </div>
+    <button class="ev-map-btn" onclick="window.open('https://maps.google.com/?q=Muthukumaraswamy+Thirukovil+Konganagiri+Tirupur','_blank')">
+      <i class="ti ti-map-pin" style="font-size:13px" aria-hidden="true"></i>
+      <span data-en="Get directions" data-ta="வழிகாட்டி பெறவும்">Get directions</span>
+    </button>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="sdiv" id="s4"><div class="sdl"></div><div class="sdt" data-en="Scene IV · Full programme" data-ta="காட்சி IV · நிகழ்ச்சி நிரல்">Scene IV · Full programme</div><div class="sdl"></div></div>
+<div class="sc" id="sc4">
+  <div class="sch">
+    <div class="sch-row"><div class="sch-t">10:30 – 12:00</div><div class="sch-e"><div class="sch-en" data-en="Pattaniseer" data-ta="பட்டணிசீர்">Pattaniseer</div><div class="sch-ta">பட்டணிசீர்</div><div class="sch-day" data-en="22 Aug, Saturday" data-ta="22 ஆக., சனி">22 Aug, Saturday</div></div></div>
+    <div class="sch-row"><div class="sch-t">5:00 – 6:00 PM</div><div class="sch-e"><div class="sch-en" data-en="Groom's invitation" data-ta="மாப்பிள்ளை அழைப்பு">Groom's invitation</div><div class="sch-ta">மாப்பிள்ளை அழைப்பு</div></div></div>
+    <div class="sch-row"><div class="sch-t">6:15 – 7:15 PM</div><div class="sch-e"><div class="sch-en" data-en="Muhurthal" data-ta="முகூர்த்தக்கால்">Muhurthal</div><div class="sch-ta">முகூர்த்தக்கால்</div></div></div>
+    <div class="sch-row"><div class="sch-t">6:00 – 9:00 PM</div><div class="sch-e"><div class="sch-en" data-en="Reception" data-ta="வரவேற்பு">Reception</div><div class="sch-ta">வரவேற்பு</div></div></div>
+    <div class="sch-row"><div class="sch-t">9:00 – 10:00 PM</div><div class="sch-e"><div class="sch-en" data-en="Nichayathartham" data-ta="நிச்சயதார்த்தம்">Nichayathartham</div><div class="sch-ta">நிச்சயதார்த்தம்</div></div></div>
+    <div class="sch-row" style="border-bottom:none"><div class="sch-t" style="color:#8B1A2F">4:30 – 6:00 AM</div><div class="sch-e"><div class="sch-en" style="color:var(--G2)" data-en="The Muhurtham" data-ta="சுபமுகூர்த்தம்">The Muhurtham</div><div class="sch-ta">சுபமுகூர்த்தம்</div><div class="sch-day" style="color:var(--G2)" data-en="23 Aug · Auspicious dawn" data-ta="23 ஆக. · புனித விடியல்">23 Aug · Auspicious dawn</div></div></div>
+  </div>
+</div>
+
+<!-- POEM -->
+<div class="poem-block" id="poem">
+  <div class="poem-bracket">— கவிதை —</div>
+  <div class="poem-text">
+    தாமரையில் விழிசெய்து<br>
+    தளிர்மலரில் முகம்செய்து..!!<br>
+    <span class="poem-hl">காமனுக்குப் போட்டியனாய்</span><br>
+    கதிரழகு படைத்திட்டோன்..!!<br><br>
+    வானமுக வீதியிலே<br>
+    வந்திறங்கும் வேளையிலே..!!<br>
+    <span class="poem-hl">கானமி சைத்தபோதே</span><br>
+    கண்ட தேவதை இவளோ..!!
+  </div>
+  <div class="poem-attr">— கண்ணன் கார்ட்ஸ், திருப்பூர்</div>
+</div>
+
+<!-- GALLERY -->
+<div class="sdiv" id="s5"><div class="sdl"></div><div class="sdt" data-en="Scene V · Frames of joy" data-ta="காட்சி V · மகிழ்ச்சியின் காட்சிகள்">Scene V · Frames of joy</div><div class="sdl"></div></div>
+<div style="position:relative;z-index:2" id="sc5gal">
+  <div class="gal">
+    <div class="gi wide" onclick="openLB(0)"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=75" alt="Wedding"/><div class="gi-overlay"></div></div>
+    <div class="gi" onclick="openLB(1)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=75" alt="Wedding"/><div class="gi-overlay"></div></div>
+    <div class="gi" onclick="openLB(2)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500&q=75" alt="Wedding"/><div class="gi-overlay"></div></div>
+    <div class="gi" onclick="openLB(3)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=500&q=75" alt="Wedding"/><div class="gi-overlay"></div></div>
+    <div class="gi" onclick="openLB(4)"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=500&q=75" alt="Wedding"/><div class="gi-overlay"></div></div>
+  </div>
+</div>
+
+<!-- BUS ROUTE -->
+<div class="sdiv" id="s6"><div class="sdl"></div><div class="sdt" data-en="Scene VI · Getting here" data-ta="காட்சி VI · வழித்தடம்">Scene VI · Getting here</div><div class="sdl"></div></div>
+<div class="sc" id="sc6">
+  <div class="sc-eyebrow" data-en="Bus route · Tirupur to venue" data-ta="பேருந்து வழி · திருப்பூர் இருந்து">Bus route · Tirupur to venue</div>
+  <div class="rt-list">
+    <div class="rt-thread"></div>
+    <div class="rt-stop"><div class="rt-dot"></div><div><div class="rt-name" data-en="Tirupur Main Bus Stand" data-ta="திருப்பூர் மைய பேருந்து நிலையம்">Tirupur Main Bus Stand</div><div class="rt-name-ta">திருப்பூர் மைய பேருந்து நிலையம்</div><div class="rt-note" data-en="Board Tirupur – Coimbatore service" data-ta="திருப்பூர்–கோவை பேருந்து ஏறவும்">Board Tirupur – Coimbatore service</div></div></div>
+    <div class="rt-stop"><div class="rt-dot"></div><div><div class="rt-name" data-en="Tolgate Junction, Coimbatore" data-ta="டோல்கேட் சந்திப்பு, கோவை">Tolgate Junction, Coimbatore</div><div class="rt-name-ta">டோல்கேட் சந்திப்பு</div><div class="rt-note" data-en="Alight here. Take auto or city bus to Avinashi Road." data-ta="இங்கே இறங்கி ஆட்டோ / சிட்டி பஸ்ஸில் அவினாசி ரோட்டிற்கு செல்லவும்.">Alight here. Take auto or city bus to Avinashi Road.</div></div></div>
+    <div class="rt-stop"><div class="rt-dot"></div><div><div class="rt-name" data-en="Thennampaalayam Bus Stop" data-ta="தென்னம்பாளையம் நிறுத்தம்">Thennampaalayam Bus Stop</div><div class="rt-name-ta">தென்னம்பாளையம் நிறுத்தம்</div><div class="rt-note" data-en="Alight at Thennampaalayam. Mandapam is immediately beside." data-ta="இறங்கவும். மண்டபம் அருகில் உள்ளது.">Alight at Thennampaalayam. Mandapam is beside.</div></div></div>
+    <div class="rt-stop"><div class="rt-dot dest"></div><div><div class="rt-name" style="color:var(--G2)" data-en="Thanganayagi Amman Kovil Mandapam" data-ta="தங்கநாயகி அம்மன் கோவில் புதிய மண்டபம்">Thanganayagi Amman Kovil Mandapam</div><div class="rt-name-ta">அரசூர் பிரிவு, அவினாசி ரோட், கோயம்புத்தூர்</div><div class="rt-note" data-en="Arasur Pirivu, Avinashi Road, Coimbatore" data-ta="அரசூர் பிரிவு, அவினாசி ரோட்">Arasur Pirivu, Avinashi Road, Coimbatore</div></div></div>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<div class="sdiv" id="s7"><div class="sdl"></div><div class="sdt" data-en="Scene VII · Our soundtrack" data-ta="காட்சி VII · இசை">Scene VII · Our soundtrack</div><div class="sdl"></div></div>
+<div class="sc" id="sc7" style="padding:44px 0">
+  <div class="player-wrap">
+    <div class="player-head" data-en="Songs that found us" data-ta="எங்களை கண்டெடுத்த பாடல்கள்">Songs that found us</div>
+    <div class="tracks" id="trackList"></div>
+    <div class="player-ctrl">
+      <button class="pc-btn" onclick="prevT()" aria-label="Previous"><i class="ti ti-player-skip-back" style="font-size:15px;color:var(--G6)"></i></button>
+      <button class="pc-btn pc-play" id="playBtn" onclick="togglePlay()" aria-label="Play">
+        <i class="ti ti-player-play" id="playIco" style="font-size:13px"></i>
+      </button>
+      <button class="pc-btn" onclick="nextT()" aria-label="Next"><i class="ti ti-player-skip-forward" style="font-size:15px;color:var(--G6)"></i></button>
+      <div class="prog-bar" onclick="seek(event)"><div class="prog-fill" id="pf"></div><div class="prog-dot"></div></div>
+    </div>
+    <div class="player-now"><div class="pn-name" id="pnName">—</div><div class="pn-time" id="pnTime">0:00</div></div>
+  </div>
+</div>
+
+<!-- WISHES -->
+<div class="sdiv" id="s8"><div class="sdl"></div><div class="sdt" data-en="Scene VIII · Wishes wall" data-ta="காட்சி VIII · வாழ்த்துக்கள்">Scene VIII · Wishes wall</div><div class="sdl"></div></div>
+<div class="sc" id="sc8">
+  <div class="sc-title" data-en="Leave us a wish" data-ta="வாழ்த்து தெரிவிக்கவும்">Leave us a wish</div>
+  <div class="sc-title-ta" data-en="உங்கள் வார்த்தைகள் என்றும் நம்மிடம் இருக்கும்" data-ta="உங்கள் வார்த்தைகள் என்றும் நம்மிடம் இருக்கும்">உங்கள் வார்த்தைகள் என்றும் நம்மிடம் இருக்கும்</div>
+  <div class="wish-compose">
+    <div class="wish-row">
+      <input class="wish-input" id="wn" placeholder="Your name" style="flex:1"/>
+      <input class="wish-input" id="wc" placeholder="City" style="width:100px;flex-shrink:0"/>
+    </div>
+    <textarea class="wish-ta" id="wm" placeholder="Write your blessings…"></textarea>
+    <div class="wish-footer">
+      <div class="wlp-row">
+        <button class="wlp on" onclick="wLang('en')">EN</button>
+        <button class="wlp" onclick="wLang('ta')">த</button>
+      </div>
+      <button class="wish-send-btn" onclick="addWish()">
+        <i class="ti ti-send" style="font-size:11px;vertical-align:-1px;margin-right:5px" aria-hidden="true"></i>
+        <span data-en="Send wish" data-ta="அனுப்பவும்">Send wish</span>
+      </button>
+    </div>
+  </div>
+  <div class="wish-feed" id="wishFeed"></div>
+  <div class="wc-count" id="wCount"></div>
+</div>
+
+<!-- GIFTS -->
+<div class="sdiv" id="s9"><div class="sdl"></div><div class="sdt" data-en="Scene IX · Gift registry" data-ta="காட்சி IX · பரிசு பட்டியல்">Scene IX · Gift registry</div><div class="sdl"></div></div>
+<div class="sc" id="sc9">
+  <div class="gift-intro" data-en="Your presence is the greatest gift of all. But if you wish to bless us further, here is a small guide." data-ta="உங்கள் வருகையே எங்களுக்கு மிகவும் விலைமதிப்பற்ற பரிசு.">Your presence is the greatest gift of all. But if you wish to bless us further, here is a small guide.</div>
+  <div class="gift-intro-ta">உங்கள் வருகையே எங்களுக்கு மிகவும் விலைமதிப்பற்ற பரிசு. ஆயினும் பரிசளிக்க விரும்பினால், கீழே சில யோசனைகள்.</div>
+  <div class="gift-item"><div class="gi-badge"><i class="ti ti-home" style="font-size:15px" aria-hidden="true"></i></div><div class="gi-body"><div class="gi-title" data-en="Home essentials" data-ta="வீட்டு அத்தியாவசியங்கள்">Home essentials</div><div class="gi-title-ta">வீட்டு அத்தியாவசியங்கள்</div><div class="gi-desc" data-en="Kitchen appliances, cookware, anything that makes a home warm." data-ta="சமையலறை உபகரணங்கள், பாத்திரங்கள்.">Kitchen appliances, cookware, anything that makes a home warm.</div></div><div class="gi-pill" data-en="open" data-ta="திறந்த">open</div></div>
+  <div class="gift-item"><div class="gi-badge"><i class="ti ti-book" style="font-size:15px" aria-hidden="true"></i></div><div class="gi-body"><div class="gi-title" data-en="Books & learning" data-ta="புத்தகங்கள்">Books & learning</div><div class="gi-title-ta">புத்தகங்கள் & கல்வி</div><div class="gi-desc" data-en="We both love reading. A great book is always welcome." data-ta="நாங்கள் இருவரும் படிக்க விரும்புகிறோம்.">We both love reading. A great book is always welcome.</div></div><div class="gi-pill" data-en="open" data-ta="திறந்த">open</div></div>
+  <div class="gift-item"><div class="gi-badge"><i class="ti ti-plane" style="font-size:15px" aria-hidden="true"></i></div><div class="gi-body"><div class="gi-title" data-en="Honeymoon fund" data-ta="தேன்நிலவு நிதி">Honeymoon fund</div><div class="gi-title-ta">தேன்நிலவு நிதி</div><div class="gi-desc">UPI: tamilselvan@upi</div></div><div class="gi-pill pop" data-en="popular" data-ta="பிரபலம்">popular</div></div>
+  <div class="gift-item"><div class="gi-badge"><i class="ti ti-leaf" style="font-size:15px" aria-hidden="true"></i></div><div class="gi-body"><div class="gi-title" data-en="Nutrition & wellness" data-ta="ஆரோக்கியம்">Nutrition & wellness</div><div class="gi-title-ta">ஊட்டச்சத்து & ஆரோக்கியம்</div><div class="gi-desc" data-en="Kavibharathi's passion — health & nutrition." data-ta="கவிபாரதியின் ஆர்வம் — ஆரோக்கியம்.">Kavibharathi's passion — health & nutrition.</div></div><div class="gi-pill" data-en="open" data-ta="திறந்த">open</div></div>
+  <div class="gift-item" style="border-bottom:none"><div class="gi-badge"><i class="ti ti-device-laptop" style="font-size:15px" aria-hidden="true"></i></div><div class="gi-body"><div class="gi-title" data-en="Tech & gadgets" data-ta="தொழில்நுட்பம்">Tech & gadgets</div><div class="gi-title-ta">தொழில்நுட்ப சாதனங்கள்</div><div class="gi-desc" data-en="Tamilselvan the CS engineer — smart home, gadgets." data-ta="தமிழ்செல்வன் CS பொறியாளர் — கேஜெட்கள்.">Tamilselvan the CS engineer — smart home, gadgets.</div></div><div class="gi-pill" data-en="open" data-ta="திறந்த">open</div></div>
+  <div class="gift-note"><div class="gn-body" data-en="Above all — your presence, blessings and laughter on our day is what we cherish most." data-ta="எல்லாவற்றிலும் மேலாக — உங்கள் ஆசீர்வாதமும் வருகையுமே எங்களுக்கு மிகவும் விலைமதிப்பற்றது.">Above all — your presence, blessings and laughter is what we cherish most.</div><div class="gn-ta">எல்லாவற்றிலும் மேலாக — உங்கள் ஆசீர்வாதமும் வருகையுமே எங்களுக்கு மிகவும் விலைமதிப்பற்றது.</div></div>
+</div>
+
+<!-- RSVP -->
+<div class="sdiv" id="s10"><div class="sdl"></div><div class="sdt" data-en="Scene X · Your presence" data-ta="காட்சி X · உங்கள் வருகை">Scene X · Your presence</div><div class="sdl"></div></div>
+<div class="rsvp-block" id="sc10" style="position:relative;z-index:2">
+  <div class="rsvp-h" data-en="Will you be there?" data-ta="நீங்கள் வருவீர்களா?">Will you be there?</div>
+  <div class="rsvp-ta">தங்கள் வருகையால் மகிழ்விக்க அன்போடு அழைக்கின்றோம்</div>
+  <div class="rsvp-sub" data-en="Kindly confirm your gracious presence" data-ta="தயவுசெய்து வருகை தெரிவிக்கவும்">Kindly confirm your gracious presence</div>
+  <div class="rsvp-btns">
+    <button class="btn-wa" onclick="doWA()">
+      <svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span data-en="RSVP via WhatsApp" data-ta="WhatsApp மூலம் பதில் அளிக்கவும்">RSVP via WhatsApp</span>
+    </button>
+    <button class="btn-outline" onclick="window.open('tel:+919965857555')">
+      <i class="ti ti-phone" style="font-size:13px" aria-hidden="true"></i> +91 99658 57555
+    </button>
+    <button class="btn-outline" onclick="window.open('tel:+919790501616')">
+      <i class="ti ti-phone" style="font-size:13px" aria-hidden="true"></i> +91 97905 01616
+    </button>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <span class="cl-orn">✦ ✦ ✦</span>
+  <div class="cl-names">Tamilselvan<br>&amp;<br>Kavibharathi</div>
+  <div class="cl-names-ta">சு. தமிழ்செல்வன் & இ. கவிபாரதி</div>
+  <div class="cl-phones">
+    <div class="cl-ph">Kannan Cards, Tirupur · 99658 57555</div>
+    <div class="cl-ph">97905 01616 · 97901 02903</div>
+  </div>
+  <div class="cl-rule"></div>
+  <div class="cl-end" data-en="With love & blessings · 22–23 August 2026" data-ta="அன்புடன் & ஆசியுடன் · 22–23 ஆகஸ்ட் 2026">With love & blessings · 22–23 August 2026</div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb-wrap" id="lb">
+  <button class="lb-x" onclick="closeLB()">✕</button>
+  <img class="lb-img" id="lbImg" src="" alt="Photo"/>
+  <div class="lb-nav">
+    <button onclick="lbMove(-1)">← prev</button>
+    <button onclick="lbMove(1)">next →</button>
+  </div>
+</div>
+</div>
+
+<script>
+const WEDDING = new Date('2026-08-23T04:30:00');
+function tick(){
+  let d=WEDDING-new Date(); if(d<0)d=0;
+  document.getElementById('cdd').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
+  document.getElementById('cdh').textContent=String(Math.floor((d%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cdm').textContent=String(Math.floor((d%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cds').textContent=String(Math.floor((d%60000)/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}});},{threshold:0.08});
+document.querySelectorAll('.sdiv,.sc,.poem-block').forEach(el=>io.observe(el));
+
+let lang='en';
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.ltb').forEach(b=>b.classList.remove('on'));
+  document.querySelector(`.ltb[onclick="setLang('${l}')"]`).classList.add('on');
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const t=el.getAttribute('data-'+l)||el.getAttribute('data-en');
+    if(!['TEXTAREA','INPUT','IMG'].includes(el.tagName)) el.textContent=t;
+  });
+  document.getElementById('wn').placeholder=l==='ta'?'உங்கள் பெயர்':'Your name';
+  document.getElementById('wc').placeholder=l==='ta'?'ஊர்':'City';
+  document.getElementById('wm').placeholder=l==='ta'?'உங்கள் வாழ்த்துகளை இங்கே எழுதவும்…':'Write your blessings…';
+}
+
+const PHOTOS=['https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=80','https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80','https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&q=80','https://images.unsplash.com/photo-1606800052052-a08af7148866?w=900&q=80','https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=900&q=80'];
+let lbIdx=0;
+function openLB(i){lbIdx=i;document.getElementById('lbImg').src=PHOTOS[i];document.getElementById('lb').classList.add('open');}
+function closeLB(){document.getElementById('lb').classList.remove('open');}
+function lbMove(d){lbIdx=(lbIdx+d+PHOTOS.length)%PHOTOS.length;document.getElementById('lbImg').src=PHOTOS[lbIdx];}
+
+const TRACKS=[{n:'Kannana Kanney',a:'Ilaiyaraaja',d:'4:32'},{n:'Vennilave Vennilave',a:'A.R. Rahman',d:'5:14'},{n:'Ennodu Nee Irundhaal',a:'A.R. Rahman',d:'4:58'},{n:'Munbe Vaa',a:'Harris Jayaraj',d:'4:20'},{n:'Nenjukkul Peidhidum',a:'Harris Jayaraj',d:'5:01'}];
+let cur=0,playing=false,prog=0,tmr=null;
+function renderTracks(){
+  const tl=document.getElementById('trackList'); tl.innerHTML='';
+  TRACKS.forEach((t,i)=>{
+    const r=document.createElement('div'); r.className='track-row'+(i===cur?' active':''); r.onclick=()=>selT(i);
+    r.innerHTML=`<div class="tr-num${i===cur?' active':''}">${String(i+1).padStart(2,'0')}</div><div class="tr-info"><div class="tr-name">${t.n}</div><div class="tr-artist">${t.a}</div></div><div class="tr-dur">${t.d}</div><div style="width:24px;display:flex;align-items:center;justify-content:center">${i===cur&&playing?'<div class="eq-bars"><div class="eq-b"></div><div class="eq-b"></div><div class="eq-b"></div></div>':'<i class="ti ti-player-play" style="font-size:12px;color:var(--G6)" aria-hidden="true"></i>'}</div>`;
+    tl.appendChild(r);
+  });
+  document.getElementById('pnName').textContent=TRACKS[cur].n;
+}
+renderTracks();
+function selT(i){cur=i;prog=0;playing=true;clearInterval(tmr);startProg();renderTracks();document.getElementById('playIco').className='ti ti-player-pause';}
+function togglePlay(){playing=!playing;document.getElementById('playIco').className=playing?'ti ti-player-pause':'ti ti-player-play';if(playing)startProg();else clearInterval(tmr);renderTracks();}
+function nextT(){selT((cur+1)%TRACKS.length);}
+function prevT(){selT((cur-1+TRACKS.length)%TRACKS.length);}
+function startProg(){clearInterval(tmr);tmr=setInterval(()=>{prog=Math.min(prog+0.35,100);document.getElementById('pf').style.width=prog+'%';const tot=parseDur(TRACKS[cur].d);const el=Math.floor(prog/100*tot);document.getElementById('pnTime').textContent=`${Math.floor(el/60)}:${String(el%60).padStart(2,'0')}`;if(prog>=100){clearInterval(tmr);nextT();}},200);}
+function parseDur(s){const p=s.split(':');return parseInt(p[0])*60+parseInt(p[1]);}
+function seek(e){const r=e.currentTarget.getBoundingClientRect();prog=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100));document.getElementById('pf').style.width=prog+'%';}
+
+function wLang(l){document.querySelectorAll('.wlp').forEach(b=>b.classList.remove('on'));document.querySelector(`.wlp[onclick="wLang('${l}')"]`).classList.add('on');}
+const INIT_WISHES=[{name:'Ravi Kumar',city:'Chennai',msg:'May your home be filled with laughter and love. Congratulations Tamilselvan & Kavibharathi!',time:'2 days ago',ta:false},{name:'Priya Devi',city:'Coimbatore',msg:'தமிழ்செல்வன் & கவிபாரதிக்கு மனமார்ந்த திருமண வாழ்த்துக்கள்! இணைந்த உங்கள் வாழ்க்கை இனிமையாய் அமையட்டும்.',time:'3 days ago',ta:true},{name:'Suresh & Family',city:'Tirupur',msg:'Wishing the beautiful couple a lifetime of happiness and togetherness. God bless you both!',time:'5 days ago',ta:false},{name:'Meena Lakshmi',city:'Erode',msg:'ஆயிரம் ஆண்டு வாழுங்கள்! உங்கள் வாழ்க்கை சந்தோஷமாக அமையட்டும்.',time:'1 week ago',ta:true}];
+let wishes=[...INIT_WISHES];
+function renderWishes(){const f=document.getElementById('wishFeed');f.innerHTML='';wishes.forEach(w=>{const d=document.createElement('div');d.className='wcard';d.innerHTML=`<div class="wc-from">${w.name} · ${w.city}</div><div class="wc-msg${w.ta?' ta':''}">"${w.msg}"</div><div class="wc-time">${w.time}</div>`;f.appendChild(d);});document.getElementById('wCount').textContent=`${wishes.length} blessings received`;}
+renderWishes();
+function addWish(){const n=document.getElementById('wn').value.trim(),c=document.getElementById('wc').value.trim(),m=document.getElementById('wm').value.trim();if(!n||!m)return;const isTa=document.querySelector('.wlp.on')?.getAttribute('onclick')?.includes('ta');wishes.unshift({name:n,city:c||'—',msg:m,time:'Just now',ta:!!isTa});document.getElementById('wn').value='';document.getElementById('wc').value='';document.getElementById('wm').value='';renderWishes();}
+
+function doWA(){const m=lang==='ta'?encodeURIComponent('வணக்கம்! தமிழ்செல்வன் & கவிபாரதி திருமண விழாவில் கலந்துகொள்ள மகிழ்ச்சியாக இருக்கிறோம். நன்றி! 🌸'):encodeURIComponent("Hello! We're delighted to attend Tamilselvan & Kavibharathi's wedding 22–23 Aug 2026. Confirming our presence! 🌸");window.open('https://wa.me/919965857555?text='+m,'_blank');}
+
+const cv=document.getElementById('gc');
+const ctx=cv.getContext('2d');
+function resCV(){cv.width=cv.offsetWidth;cv.height=document.getElementById('root').scrollHeight||3000;}
+resCV();
+const pts=[];
+for(let i=0;i<60;i++)pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1+0.3,vx:(Math.random()-0.5)*0.15,vy:-Math.random()*0.22-0.05,a:Math.random()*0.35+0.08,ph:Math.random()*Math.PI*2,sp:0.003+Math.random()*0.004});
+let fr=0;
+function drawPts(){ctx.clearRect(0,0,cv.width,cv.height);fr+=0.007;pts.forEach(p=>{p.x+=p.vx+Math.sin(fr+p.ph)*0.1;p.y+=p.vy;if(p.y<-10){p.y=cv.height+10;}if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;const al=p.a*(0.55+0.45*Math.sin(fr*0.8+p.ph));ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${al})`;ctx.fill();});requestAnimationFrame(drawPts);}
+drawPts();
+window.addEventListener('resize',()=>{resCV();});
+</script>
