@@ -1413,3 +1413,149 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.28em;
 }
+
+/* ==========================================================================
+   FLAWLESS MOBILE RESPONSIVE OPTIMIZATIONS (Max-Width: 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  /* Prevent horizontal scroll and ensure clean edge spacing */
+  html, body, .mobile-app-shell {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* Hero Section Mobile Adjustments */
+  .hero-section {
+    padding: 2rem 1rem 3.8rem;
+    min-height: 580px;
+  }
+  .hero-title .name {
+    font-size: clamp(1.7rem, 8.5vw, 2.6rem);
+  }
+  .hero-title .weds-accent {
+    font-size: clamp(2rem, 8.5vw, 2.8rem);
+  }
+
+  /* Welcome Section Mobile Adjustments */
+  .welcome-section {
+    padding: 3.5rem 1.2rem;
+  }
+  .welcome-container {
+    padding: 2.2rem 1.4rem;
+  }
+  .welcome-title {
+    font-size: clamp(1.3rem, 6.5vw, 1.8rem);
+  }
+  .welcome-paragraph {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  /* Scratch Card Section Mobile Adjustments */
+  .scratch-section {
+    padding: 3.5rem 1.2rem;
+  }
+  .scratch-card-wrapper {
+    max-width: 100%;
+    height: 250px;
+  }
+  .secret-date {
+    font-size: clamp(1.4rem, 6.5vw, 1.9rem);
+  }
+
+  /* Portrait Showcase Section Mobile Adjustments */
+  .portrait-section {
+    padding: 3.5rem 1rem;
+  }
+  .portrait-frame {
+    height: 480px;
+  }
+  .portrait-caption-title {
+    font-size: 1.15rem;
+  }
+
+  /* Live Countdown Grid Mobile Adjustments */
+  .countdown-section {
+    padding: 3.5rem 1rem;
+  }
+  .countdown-grid {
+    gap: 0.4rem;
+    padding: 1.4rem 0.8rem;
+  }
+  .time-unit .time-value {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+  .time-separator {
+    font-size: 1.5rem;
+  }
+
+  /* Location Section & Venue Switcher Mobile Adjustments */
+  .location-section {
+    padding: 3.5rem 1rem;
+  }
+  .venue-cinematic-card {
+    padding: 1.2rem;
+  }
+  .venue-tabs {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .venue-tab {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+  }
+  .venue-viewport {
+    height: 260px;
+  }
+  .venue-name {
+    font-size: 1.25rem;
+  }
+  .btn-venue-nav {
+    padding: 1rem 1.4rem;
+    font-size: 0.88rem;
+  }
+
+  /* Footer Mobile Adjustments */
+  .footer-section {
+    padding: 3.5rem 1.2rem 2.5rem;
+  }
+  .footer-logo {
+    max-width: 230px;
+    max-height: 120px;
+  }
+  .closing-remark {
+    font-size: clamp(1.9rem, 8.5vw, 2.4rem);
+  }
+}
+
+/* ==========================================================================
+   COMPACT SMARTPHONE & ULTRA-NARROW VIEWPORTS (Max-Width: 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .hero-title .name {
+    font-size: 1.55rem;
+  }
+  .hero-title .weds-accent {
+    font-size: 1.85rem;
+  }
+  .countdown-grid {
+    gap: 0.2rem;
+    padding: 1.2rem 0.4rem;
+  }
+  .time-unit .time-value {
+    font-size: 1.4rem;
+  }
+  .time-separator {
+    font-size: 1.2rem;
+  }
+  .welcome-container {
+    padding: 1.8rem 1rem;
+  }
+  .venue-name {
+    font-size: 1.1rem;
+  }
+  .portrait-frame {
+    height: 420px;
+  }
+}
