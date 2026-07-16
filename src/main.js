@@ -356,7 +356,7 @@ function initVenueSwitcher() {
         '❄️ Air-Conditioned Hall',
         '🚗 Ample Valet Parking'
       ],
-      gpsUrl: 'https://maps.google.com/?q=Thanganayagi+Amman+Kovil+Arakattalai+New+Mandapam+Coimbatore',
+      gpsUrl: 'https://maps.app.goo.gl/cmdeaJLwM7bM7pvK9?g_st=ac',
       copyAddress: 'Thanganayagi Amman Kovil Arakattalai New Mandapam, Coimbatore, Tamil Nadu'
     },
     muhurtham: {
@@ -370,7 +370,7 @@ function initVenueSwitcher() {
         '🌅 Auspicious Sunrise Muhurtham',
         '🪔 Sacred Spiritual Atmosphere'
       ],
-      gpsUrl: 'https://maps.google.com/?q=Arulmigu+Sri+Muthukumaraswamy+Thirukovil+Tirupur',
+      gpsUrl: 'https://share.google/4YhHg2wIs5xkaFRzk',
       copyAddress: 'Arulmigu Sri Muthukumaraswamy Thirukovil, Tirupur, Tamil Nadu'
     }
   };
